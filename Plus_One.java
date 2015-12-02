@@ -1,6 +1,5 @@
 /*Plus One
 Given a non-negative number represented as an array of digits, plus one to the number.
-
 The digits are stored such that the most significant digit is at the head of the list.
 
 Hide Company Tags Google
@@ -16,11 +15,9 @@ public class Solution {
                 change = 0;
                 break;
             }
-        }
-        
+        }       
         int[] ans = new int[end+change];
-        if(digits==null || digits.length==0){return ans;}
-        
+        if(digits==null || digits.length==0){return ans;}        
         int carry=0; int plus = 0;
         for(int i=end-1;i>=0;i--){
                 if(i==end-1){
@@ -37,14 +34,8 @@ public class Solution {
                     ans[i]=digits[i]+plus+carry;
                     carry=0;
                 }
-            
-            
-
-        }
-        
-        if(change==1){ans[0]=carry;}
-        
-        
+        }       
+        if(change==1){ans[0]=carry;}               
         return ans;
     }
 }
