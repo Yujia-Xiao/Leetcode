@@ -1,4 +1,5 @@
-/*Minimum Height Trees
+/*
+Minimum Height Trees
 Total Accepted: 1610 Total Submissions: 6679 Difficulty: Medium
 For a undirected graph with tree characteristics, we can choose any node as the root. The result graph is then a rooted tree. Among all possible rooted trees, those with minimum height are called minimum height trees (MHTs). Given such a graph, write a function to find all the MHTs and return a list of their root labels.
 
