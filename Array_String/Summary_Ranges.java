@@ -14,34 +14,21 @@ Hide Similar Problems (M) Missing Ranges
 public class Solution {
     public List<String> summaryRanges(int[] nums) {
         List<String> ans = new ArrayList<String>();
-        int start=0; int end = 0;
-        String str="";
         if(nums==null || nums.length==0){return ans;}
-        
-        while(start<nums.length && end+1<nums.length){
-            if((nums[end+1]-nums[end])!=1){
-                if(start==end){
-                     str=nums[start]+"";
-                }
-                else{
-                     str=nums[start]+"->"+nums[end];
-                }
-                ans.add(str);
-                start=end+1;
-                end++;
-                    
-                }
-            else{end++;}
+        int start=0; int end = 0;
+        while(start<nums.length){//two pointers
+            String temStr="";
+            int a = nums[start];
+            while(end+1<nums.length){
+                int b = nums[end+1];
+                if(a+1==b){a++;end++;}
+                else{break;}
+            }
+            if(start==end)temStr=nums[start]+"";
+            else{temStr=nums[start]+"->"+nums[end];}
+            ans.add(temStr);
+            start=end+1;end=end+1;
         }
-        //end is the last, means end is not included
-        if(end+1==nums.length && start!=end){
-            str=nums[start]+"->"+nums[end];
-            ans.add(str);
-        }
-        if(end+1==nums.length && start==end){
-            str=nums[start]+"";
-            ans.add(str);
-        }   
         return ans;
     }
 }

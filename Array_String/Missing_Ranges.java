@@ -8,56 +8,43 @@ Hide Company Tags Google
 Hide Tags Array
 Hide Similar Problems (E) Summary Ranges
 */
-public class Solution {   
+public class Solution {  
     public List<String> findMissingRanges(int[] nums, int lower, int upper) {
         List<String> ans = new ArrayList<String>();
-        String str = ""; int s; int e;
-        if(nums==null || nums.length==0){            
-            //return null;
-            if(lower == upper){
-                str=lower+"";
-            }
-            else{
-                str=lower+"->"+upper;
-            }
-            ans.add(str);
-            return ans;
-        }
+        if(nums==null || nums.length==0){
+            if(lower==upper)ans.add(lower+"");
+            else{ans.add(lower+"->"+upper);}
+            return ans;}
+        int start = 0; int next = start;
         if(nums[0]!=lower){
-            if(nums[0]==lower+1){str=lower+"";}
-            else{
-                s = nums[0]-1;
-                str=lower+"->"+s;
+            if(lower==nums[0]-1){ans.add((lower)+"");}
+            else{ans.add(lower+"->"+(nums[0]-1));}
+        }    
+        while(start<nums.length){
+            int ca = nums[start];
+            while(next+1<nums.length){
+                int cb = nums[next+1];
+                if(ca+1==cb){
+                    start++;next++;
+                    ca = nums[start];
+                }
+                else{break;}
             }
-            ans.add(str);
-        }
-
-        for(int i=1;i<nums.length;i++){
-            ans=addAns(ans,nums,i-1,i);
-        }
-        
-        if(nums[nums.length-1]!=upper){
-            if(nums[nums.length-1]==upper-1){str=upper+"";}
-            else{
-                s = nums[nums.length-1]+1;
-                str=s+"->"+upper;
+            //collect ans
+            if(start==nums.length-1){
+                if(nums[start]!=upper){
+                    if(nums[start]==upper-1){ans.add(upper+"");}
+                    else{ans.add((nums[start]+1)+"->"+upper);}
+                }       
             }
-            ans.add(str);
-        }       
-        return ans;
-    }
-    
-    public static List<String> addAns(List<String> ans,int[] nums,int start,int end){
-        if((nums[end]-nums[start])<=1){return ans;}
-        int s;int e;
-        if((nums[end]-nums[start]) == 2){
-            s= nums[start]+1;
-            String str = s+"";
-            ans.add(str);
-        }
-        else{   s= nums[start]+1;e= nums[end]-1;
-                String str = s+"->"+e;
-                ans.add(str); 
+            else{
+                int ba = nums[start]+1; 
+                int bb = nums[start+1]-1;
+                if(ba==bb)ans.add(ba+"");
+                else{ans.add(ba+"->"+bb);}
+            }
+            //next start point
+            start=start+1;next=start;
         }
         return ans;
     }
