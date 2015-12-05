@@ -40,7 +40,7 @@ public class Solution {
         return numIsland;
     }
 
-    private void dfs(char[][] grid, int i, int j){
+    private void bfs(char[][] grid, int i, int j){
         grid[i][j] = '2'; // mark as visited
 
         if (i > 0 && grid[i-1][j] == '1') dfs(grid, i-1, j);

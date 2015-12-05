@@ -29,29 +29,28 @@ Hide Similar Problems (M) Path Sum II
  * }
  */
 public class Solution {
-    private List<String> ans = new ArrayList<String>();
     
     public List<String> binaryTreePaths(TreeNode root) {
+        List<String> ans = new ArrayList<String>();
         if(root == null){return ans;}
-        else{
-            String currentPath = root.val+"";
-            if(root.left ==null && root.right == null){
-                ans.add(currentPath);
-            }
-            dfs(root.left,currentPath);
-            dfs(root.right,currentPath);           
-        }        
+        
+        String currentPath = root.val+"";
+        if(root.left ==null && root.right == null){
+            ans.add(currentPath);
+        }            
+        dfs(root.left,currentPath,ans);
+        dfs(root.right,currentPath,ans);      
         return ans;
     }
     
-    public void dfs(TreeNode currentRoot, String currentPath){
-        if(currentRoot != null){
-            currentPath = currentPath+"->"+currentRoot.val;
-            if(currentRoot.left ==null && currentRoot.right == null){
-                ans.add(currentPath);
-            }          
-            dfs(currentRoot.left,currentPath);
-            dfs(currentRoot.right,currentPath);
+    public void dfs(TreeNode currentRoot, String currentPath,List<String> ans){
+        if(currentRoot==null) return;
+        currentPath = currentPath+"->"+currentRoot.val;
+        if(currentRoot.left ==null && currentRoot.right == null){
+            ans.add(currentPath);
         }
+        dfs(currentRoot.left,currentPath,ans);
+        dfs(currentRoot.right,currentPath,ans);
+        return;
     }
 }

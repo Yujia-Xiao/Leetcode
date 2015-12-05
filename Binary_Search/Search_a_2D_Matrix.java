@@ -32,8 +32,7 @@ public class Solution {
             else{startRow=middleRow+1;}
         }
         if(startRow==0){return false;}
-        Row=(matrix.length==1)?0:startRow-1;
-        
+        Row=startRow-1;       
         int startColumn=0; int endColumn=matrix[Row].length-1;
         int middleColumn=(startColumn+endColumn)/2;
         while(startColumn<=endColumn){
