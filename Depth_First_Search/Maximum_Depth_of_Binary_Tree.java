@@ -27,7 +27,7 @@ public class Solution {
     public int dfs(TreeNode currentRoot, int currentMax, int max){
         if(currentRoot==null){
             if(currentMax>max){max=currentMax;}
-            currentMax=0;
+            //currentMax=0;
             return max;
         }
         currentMax++;

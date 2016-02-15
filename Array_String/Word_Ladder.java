@@ -47,3 +47,37 @@ public class Solution {
     return distance;
 }
 }
+
+
+public class Solution {
+  public int ladderLength(String beginWord, String endWord, Set<String> wordDict) {
+
+       Set<String> reachedDict = new HashSet<String>();
+       wordDict.add(endWord);
+       reachedDict.add(beginWord);
+       int num = 1;
+       while(!reachedDict.contains(endWord)){
+           Set<String> reachTemp = new HashSet<String>();
+           for(String str:reachedDict){
+               for(int i=0;i<str.length();i++){
+                for(char a = 'a';a<='z';a++){
+                    char[] ch = str.toCharArray();
+                    ch[i]=a;
+                    //String rr = ch.toString();
+                    //System.out.println(rr);
+                    String temp = new String(ch);
+                   // System.out.println(temp);
+                    if(wordDict.contains(temp)){
+                        reachTemp.add(temp);
+                        wordDict.remove(temp);
+                    }
+                 }                   
+               }
+           }
+           num++;
+           if(reachTemp.size()==0)return 0;
+           reachedDict=reachTemp;
+       }
+       return num;
+   }
+}

@@ -29,6 +29,8 @@ Hide Similar Problems (E) Reverse Linked List
  *     TreeNode(int x) { val = x; }
  * }
  */
+
+
 public class Solution {
     public TreeNode upsideDownBinaryTree(TreeNode root) {
        TreeNode p = root, parent = null, parentRight = null;
@@ -43,3 +45,42 @@ public class Solution {
         return parent; 
     }
 }
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode upsideDownBinaryTree(TreeNode root) {
+        if(root==null)return root;
+        if(root.left==null && root.right==null)return root;
+        TreeNode newRoot = upsideDownBinaryTree(root.left);
+        root.left.left=root.right;
+        root.left.right=root;
+        root.left=null;
+        root.right=null;
+        return newRoot; 
+    }
+}
+
+/*
+    1
+   /\
+  2  3
+ /\
+4 5 
+
+    1
+   /
+  2 -3
+ /
+4 - 5 
+
+
+*/
