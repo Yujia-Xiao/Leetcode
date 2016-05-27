@@ -45,22 +45,3 @@ public class Solution {
         
     }
 }
-
-
-
-public class Solution {
-    public boolean searchMatrix(int[][] matrix, int target) {
-        //implement binary search, with converted index
-        int start=0; int end =matrix.length*matrix[0].length-1;
-        int mid = start+(end-start)/2;
-        while(start<=end){
-            mid = start+(end-start)/2;
-            int r = mid/matrix[0].length; //01234 /5
-            int c = mid % matrix[0].length;
-            if(matrix[r][c]==target)return true;
-            else if(matrix[r][c]<target)start=mid+1;
-            else end=mid-1;
-        }
-        return false;
-    }
-}
