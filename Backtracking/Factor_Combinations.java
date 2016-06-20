@@ -38,6 +38,35 @@ Hide Company Tags LinkedIn
 Hide Tags Backtracking
 Hide Similar Problems (M) Combination Sum
 */
+
+//Solution 2
+public class Solution {
+    public List<List<Integer>> getFactors(int n) {
+        List<List<Integer>> ans = new LinkedList<List<Integer>>();
+        if(n<=3)return ans;
+        backtrack(ans,new LinkedList<Integer>(),n,2,false);
+        return ans;
+    }
+    
+    public void backtrack(List<List<Integer>> ans, List<Integer> temList, int n, int start,boolean second){
+        if(n==1){ans.add(new LinkedList<Integer>(temList));}
+        else{
+            for(int i=start;i<=n/2;i++){
+                if(n % i !=0)continue;
+                temList.add(i);
+                backtrack(ans,new LinkedList<Integer>(temList),n/i,i,true);
+                temList.remove(temList.size()-1);
+            }
+            if(second && n>=start){
+                temList.add(n);
+                ans.add(new LinkedList<Integer>(temList));
+            }
+        }
+    }
+   
+}
+
+//Solution 1
 public class Solution {
     public List<List<Integer>> getFactors(int n) {
         //backtracking
@@ -72,3 +101,5 @@ public class Solution {
         return;
     }
 }
+
+

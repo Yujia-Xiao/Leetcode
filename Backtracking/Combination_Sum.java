@@ -21,7 +21,7 @@ Hide Similar Problems (M) Letter Combinations of a Phone Number (M) Combination 
 public class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> ans = new LinkedList<List<Integer>>();
-        Arrays.sort(candidates);
+        //Arrays.sort(candidates);
         backtrack(ans,new LinkedList<Integer>(), candidates,target,0);
         return ans;
     }
