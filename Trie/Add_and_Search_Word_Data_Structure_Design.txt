@@ -1,0 +1,96 @@
+/*
+211. Add and Search Word - Data structure design My Submissions QuestionEditorial Solution
+Total Accepted: 27007 Total Submissions: 133361 Difficulty: Medium
+Design a data structure that supports the following two operations:
+
+void addWord(word)
+bool search(word)
+search(word) can search a literal word or a regular expression string containing only letters a-z or .. A . means it can represent any one letter.
+
+For example:
+
+addWord("bad")
+addWord("dad")
+addWord("mad")
+search("pad") -> false
+search("bad") -> true
+search(".ad") -> true
+search("b..") -> true
+Note:
+You may assume that all words are consist of lowercase letters a-z.
+
+click to show hint.
+
+Hide Company Tags Facebook
+Hide Tags Backtracking Trie Design
+Hide Similar Problems (M) Implement Trie (Prefix Tree)
+*/
+public class WordDictionary {
+
+    // Adds a word into the data structure.
+    public Trie tree = new Trie();
+    public void addWord(String word) {
+        tree.insert(word);
+    }
+
+    // Returns if the word is in the data structure. A word could
+    // contain the dot character '.' to represent any one letter.
+    public boolean search(String word) {
+        return tree.search(word);
+    }
+}
+
+class TrieNode{
+    char c;
+    boolean hasWord;
+    Map<Character,TrieNode>children = new HashMap<Character,TrieNode>();
+    public TrieNode(char c){this.c=c;}
+}
+
+class Trie{
+    private TrieNode root;
+    public Trie(){
+        root = new TrieNode(' ');
+    }
+    public void insert(String s){
+        TrieNode cur = root;
+        Map<Character,TrieNode> children = root.children;
+        char[] sArr = s.toCharArray();
+        for(int i=0;i<s.length();i++){
+            char c = sArr[i];
+            if(children.containsKey(c)) cur=children.get(c);
+            else{
+                TrieNode newNode = new TrieNode(c);
+                children.put(c,newNode);
+                cur = newNode;
+            }
+            children=cur.children;
+            if(i==s.length()-1)cur.hasWord=true;
+        }
+    }
+    public boolean search(String s){
+        return backtrack(s,root,0,false);
+    }
+    
+    public boolean backtrack(String s, TrieNode cur,int start,boolean last){
+        if(start==s.length())return last;
+        char c = s.charAt(start);
+        if(c=='.'){
+            for(TrieNode tem:cur.children.values()){
+                if(backtrack(s,tem,start+1,tem.hasWord))return true;
+            }
+            return false;
+        }
+        else if (cur.children.containsKey(c)){
+            TrieNode tem = cur.children.get(c);
+            return backtrack(s,tem,start+1,tem.hasWord);
+        }
+        else return false;
+    }
+    
+}
+
+// Your WordDictionary object will be instantiated and called as such:
+// WordDictionary wordDictionary = new WordDictionary();
+// wordDictionary.addWord("word");
+// wordDictionary.search("pattern");
