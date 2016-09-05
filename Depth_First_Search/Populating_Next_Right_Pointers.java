@@ -44,19 +44,20 @@ Hide Similar Problems (H) Populating Next Right Pointers in Each Node II (M) Bin
 public class Solution {
     public void connect(TreeLinkNode root) {
         if(root==null)return;
-        dfs(root,null,true);
+        dfs(root.left,root,true);
+        dfs(root.right,root,false);
     }
     
     public void dfs(TreeLinkNode cur, TreeLinkNode parent, boolean left){
         if(cur==null)return;
-        if(parent!=null){
-            if(!left && parent.next!=null){ 
-                if(parent.next.left!=null)cur.next=parent.next.left;
-                else cur.next=parent.next.right;}
-            if(left){
-                cur.next=parent.right;
-            }
+        
+        if(!left && parent.next!=null){ 
+            if(parent.next.left!=null)cur.next=parent.next.left;
+            else cur.next=parent.next.right;}
+        if(left){
+            cur.next=parent.right;
         }
+
         dfs(cur.left,cur,true);
         dfs(cur.right,cur,false);
     }

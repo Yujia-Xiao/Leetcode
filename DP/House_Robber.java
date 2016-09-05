@@ -16,8 +16,8 @@ public class Solution {
         if(nums==null || nums.length==0)return 0;
         int[] b = new int[nums.length+1];
         int[] n = new int[nums.length+1];
-        b[0]=0;n[0]=0;b[1]=nums[0];n[1]=0;
-        for(int i=2;i<nums.length+1;i++){
+        b[0]=0;n[0]=0;//b[1]=nums[0];n[1]=0;
+        for(int i=1;i<nums.length+1;i++){
             b[i]=n[i-1]+nums[i-1];
             n[i]=Math.max(n[i-1],b[i-1]);
         }

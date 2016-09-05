@@ -20,19 +20,21 @@ Hide Similar Problems (E) Binary Tree Level Order Traversal (E) Maximum Depth of
 public class Solution {
     public int minDepth(TreeNode root) {
         if(root==null)return 0;
+        
         int min = Integer.MAX_VALUE;
-        return dfs(root,min,1);
+        min=dfs(root,min,0);
+        return min;
     }
     public int dfs(TreeNode node,int min,int current){
+        if(node==null)return Integer.MAX_VALUE;
+        current++;
         if(node.left==null && node.right==null){
             if(current<min)min=current;
             return min;
         }
-        current++;
-        int left=Integer.MAX_VALUE;
-        if(node.left!=null)left=dfs(node.left,min,current);
-        int right=Integer.MAX_VALUE;
-        if(node.right!=null)right=dfs(node.right,min,current);
+        int left=dfs(node.left,min,current);
+        int right=dfs(node.right,min,current);
+    
         return Math.min(left,right);
     }
 }

@@ -33,7 +33,6 @@ public class Solution {
         for(int left=0;left<nums.length;left++){
             if(map.containsKey(cul[left]+k))
                 max=Math.max(max,map.get(cul[left]+k)-left);
-            if(!map.containsKey(cul[left]))map.put(cul[left],left);
         }
         return max;
     }

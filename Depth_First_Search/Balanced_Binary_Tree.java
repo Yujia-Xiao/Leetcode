@@ -37,3 +37,36 @@ public class Solution {
         return ans;
     }
 }
+
+// method 2
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+
+    public boolean isBalanced(TreeNode root) {
+        if(root==null)return true;
+        int l = dfs(root.left,0,0);
+        int r = dfs(root.right,0,0);
+        if(Math.abs(l-r)<2 && isBalanced(root.left) && isBalanced(root.right)) return true;
+        else return false;
+    }
+    
+    public int dfs(TreeNode root, int culMax, int max){
+        if(root==null){
+            if(max<culMax)max=culMax;
+            return max;
+        }
+        culMax++;
+        int l = dfs(root.left,culMax,max);
+        int r = dfs(root.right,culMax,max);
+        return Math.max(l,r);
+    }
+}
