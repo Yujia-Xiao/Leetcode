@@ -27,3 +27,39 @@ public class Solution {
         return 0;
     }
 }
+
+    public int majorityElement(int[] nums) {
+        int[] bit = new int[32];
+        for (int num: nums)
+            for (int i=0; i<32; i++) 
+                if ((num>>(31-i) & 1) == 1)
+                    bit[i]++;
+        int ret=0;
+        for (int i=0; i<32; i++) {
+            bit[i]=bit[i]>nums.length/2?1:0;
+            ret += bit[i]*(1<<(31-i));
+        }
+        return ret;
+    }
+
+    public int majorityElement(int[] nums) {
+        if(nums==null || nums.length==0)return -1;
+        int ans = nums[0];int count=1;
+        for(int i=1;i<nums.length;i++){
+            if(count==0){
+                ans=nums[i];
+                count=1;
+            }else{
+                if(ans==nums[i])count++;
+                else count--;
+            }
+        }
+        if(count>0){
+            count=0;
+            for(int i=0;i<nums.length;i++){
+                if(nums[i]==ans)count++;
+            }
+            if(count>nums.length/2)return ans;
+        }
+        return -1;
+    } 

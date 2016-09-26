@@ -17,22 +17,26 @@ Hide Similar Problems (E) Balanced Binary Tree (E) Minimum Depth of Binary Tree
  *     TreeNode(int x) { val = x; }
  * }
  */
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 public class Solution {
     public int maxDepth(TreeNode root) {
-        int max = 0;
-        max=dfs(root,0,max);
-        return max;
+        return dfs(root,1);
     }
     
-    public int dfs(TreeNode currentRoot, int currentMax, int max){
-        if(currentRoot==null){
-            if(currentMax>max){max=currentMax;}
-            //currentMax=0;
-            return max;
-        }
+    public int dfs(TreeNode currentRoot, int currentMax){
+        if(currentRoot==null)return 0;
+        if(currentRoot.left==null && currentRoot.right==null)return currentMax;
         currentMax++;
-        int leftMax = dfs(currentRoot.left,currentMax,max);
-        int rightMax = dfs(currentRoot.right,currentMax,max);
+        int leftMax = dfs(currentRoot.left,currentMax);
+        int rightMax = dfs(currentRoot.right,currentMax);
         return ((leftMax>rightMax)?leftMax:rightMax);
     };
 }

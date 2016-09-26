@@ -15,21 +15,21 @@ Hide Similar Problems (M) 3Sum (M) 4Sum (M) Two Sum II - Input array is sorted (
 */
 public class Solution{
 	public int[] twoSum(int[] nums, int target){
-	
-		HashMap<Integer,Integer> map =new HashMap<Integer,Integer>();
 		if(nums.length<2)return null;
 		int[] indexnums=new int[2];
-
-		for(int i=0;i<nums.length;i++)map.put(nums[i],i+1);
-
-		for(int i=0;i<nums.length;i++){
-			if(map.containsKey(target-nums[i])){
-			    if(map.get(target-nums[i])==i+1)continue;
-				indexnums[0]=i+1;
-				indexnums[1]=map.get(target-nums[i]);
-				return indexnums;
-			}
-		}
-		return indexnums;		
+        Map<Integer,Integer>map = new HashMap<Integer,Integer>();
+        
+        for(int i=0;i<nums.length;i++){
+            if(map.containsKey(target-nums[i])){//
+                indexnums[0]=map.get(target-nums[i]);
+                indexnums[1]=i;
+                return indexnums;
+            }else{
+                map.put(nums[i],i);//3,0;2,1
+            }    
+        }
+        
+		return indexnums;
 	}
+
 }

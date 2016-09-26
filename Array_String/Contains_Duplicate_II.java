@@ -9,21 +9,14 @@ Hide Similar Problems (E) Contains Duplicate (M) Contains Duplicate III
 import java.util.Hashtable;
 public class Solution {
     public boolean containsNearbyDuplicate(int[] nums, int k) {
-        Hashtable<Integer,Set> hash = new Hashtable<Integer,Set>();
-        if(nums==null || nums.length<=1){return false;}
-        
+        HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
         for(int i=0;i<nums.length;i++){
-            if(hash.containsKey(nums[i])){
-                Iterator<Integer> it = hash.get(nums[i]).iterator();
-                while(it.hasNext()){
-                    if(Math.abs(it.next()-i)<=k){return true;}
-                }
-                hash.get(nums[i]).add(i);
+            if(map.containsKey(nums[i])){
+                if(i-map.get(nums[i])<=k)return true;
+                else map.put(nums[i],i);
+            }else{
+                map.put(nums[i],i)
             }
-            
-            Set<Integer> set = new HashSet<Integer>();
-            set.add(i);
-            hash.put(nums[i],set);
         }
         return false;
     }

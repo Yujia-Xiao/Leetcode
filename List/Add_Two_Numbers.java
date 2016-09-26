@@ -43,3 +43,23 @@ public class Solution{
 		return head.next;		
 	}
 }
+
+
+public class Solution{
+	public ListNode addTwoNumbers(ListNode L1, ListNode L2){
+		ListNode dummy = new ListNode(0);
+		ListNode cul = dummy;
+		int carry = 0;
+		while(L1!=null || L2!=null || carry!=0){
+		    int a = (L1==null)?0:L1.val;
+		    int b = (L2==null)?0:L2.val;
+		    int tem = (a+b+carry)%10;
+		    carry = (a+b+carry)/10;
+		    cul.next = new ListNode(tem);
+		    cul=cul.next;
+		    if(L1!=null)L1=L1.next;
+		    if(L2!=null)L2=L2.next;
+		}
+		return dummy.next;		
+	}
+}

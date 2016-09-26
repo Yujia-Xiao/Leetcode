@@ -20,23 +20,23 @@ public class Solution {
     public List<String> letterCombinations(String digits) {
         List<String> ans = new LinkedList<String>();
         if(digits==null || digits.length()==0)return ans;
-
+        
         Map<Character,String> map = new HashMap<Character,String>();
         map.put('1',"");map.put('2',"abc");map.put('3',"def");map.put('4',"ghi");
         map.put('5',"jkl");map.put('6',"mno");map.put('7',"pqrs");map.put('8',"tuv");
         map.put('9',"wxyz");map.put('0',"");
-
-        backtrack(ans,new StringBuilder(),digits,digits.length(),0,map);
+        
+        backtrack(ans,new StringBuilder(),digits,0,map);
         return ans;
     }
-    public void backtrack(List<String> ans, StringBuilder temS, String digits, int remain,int start, Map<Character,String> map){
-        if(remain==0)ans.add(temS.toString());
+    public void backtrack(List<String> ans, StringBuilder temS, String digits,int start, Map<Character,String> map){
+        if(start==digits.length())ans.add(temS.toString());
         else{
             char ch = digits.charAt(start);
             String s = map.get(ch);
             for(int j=0;j<s.length();j++){
                 temS.append(s.charAt(j));
-                backtrack(ans,new StringBuilder(temS.toString()),digits,remain-1,i+1,map);
+                backtrack(ans,temS,digits,start+1,map);
                 temS.deleteCharAt(temS.length()-1);   
             }
         }
