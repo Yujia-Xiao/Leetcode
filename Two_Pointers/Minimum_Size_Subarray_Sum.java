@@ -40,3 +40,28 @@ public class Solution {
         return minLength;
     }
 }
+
+public class Solution {
+    public int minSubArrayLen(int t, int[] nums) {
+        int left = 0;
+        int sum = 0;
+        int len = Integer.MAX_VALUE;;
+        for(int i=0;i<nums.length;i++){
+            sum+=nums[i];
+            if(sum>=t){
+                while(sum>t){
+                    sum-=nums[left];
+                    left++;
+                }
+                if(sum==t){
+                    len=Math.min(len,i-left+1);
+                }else if(sum<t){
+                    left--;
+                    sum+=nums[left];
+                    len=Math.min(len,i-left+1);
+                }
+            }
+        }
+        return (len==Integer.MAX_VALUE)?0:len;
+    }
+}

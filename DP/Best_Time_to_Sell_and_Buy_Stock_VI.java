@@ -47,3 +47,36 @@ public class Solution {
         return ans;
     }
 }
+
+
+////////////////////
+
+public class Solution {
+public int maxProfit(int k, int[] prices) {
+        if(prices==null || prices.length<2)return 0;
+        if(prices.length/2<k)return max(prices);
+        // DP - state machine
+        int[][] hold = new int[prices.length][k+1];//the last state + first State
+        int[][] unhold = new int[prices.length][k+1];
+        for(int j=0;j<=k;j++)hold[0][j]=-prices[0];
+        for(int i=1;i<prices.length;i++) hold[i][0] = Math.max(hold[i-1][0],-prices[i]);
+        for(int i=1;i<prices.length;i++){
+            for(int j=1;j<=k;j++){
+                hold[i][j]=Math.max(hold[i-1][j],unhold[i-1][j]-prices[i]);
+                unhold[i][j]=Math.max(hold[i-1][j-1]+prices[i],unhold[i-1][j]);
+                //System.out.println(i+" "+j+" "+hold[i][j]+" "+unhold[i][j]);
+            }
+        }
+        return Math.max(hold[prices.length-1][k],unhold[prices.length-1][k]);
+    }
+    public int max(int[] prices){
+        if(prices.length == 0)return 0;
+        int totalProfit = 0;
+        for(int i=1; i<prices.length; i++){  
+            if(prices[i] > prices[i-1]){ 
+                totalProfit += prices[i] - prices[i-1];  
+            }  
+        }  
+        return totalProfit;
+    }
+}

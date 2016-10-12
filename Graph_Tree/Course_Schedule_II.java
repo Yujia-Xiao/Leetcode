@@ -1,9 +1,16 @@
 /*
-Course Schedule II 
+210. Course Schedule II  QuestionEditorial Solution  My Submissions
+Total Accepted: 37592
+Total Submissions: 160815
+Difficulty: Medium
 There are a total of n courses you have to take, labeled from 0 to n - 1.
+
 Some courses may have prerequisites, for example to take course 0 you have to first take course 1, which is expressed as a pair: [0,1]
+
 Given the total number of courses and a list of prerequisite pairs, return the ordering of courses you should take to finish all courses.
+
 There may be multiple correct orders, you just need to return one of them. If it is impossible to finish all courses, return an empty array.
+
 For example:
 
 2, [[1,0]]
@@ -20,56 +27,33 @@ click to show more hints.
 Hide Company Tags Facebook Zenefits
 Hide Tags Depth-first Search Breadth-first Search Graph Topological Sort
 Hide Similar Problems (M) Course Schedule (H) Alien Dictionary (M) Minimum Height Trees
-*/
+Have you met this question in a real interview? Yes  */
 public class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        //topological sort, save the edges relationship -> calculate the prerequisite -> find 0, adjest the list
-        //end: if can not find prerequisite = 0  and still nodes -> false ; else true;
-        //list<Set<Integer>>
-        int[] ans = new int[0];
-        List<Integer> ansList = new ArrayList<Integer>();
-        if(numCourses==0){return ans;}
+        if(numCourses==0){return new int[0];}
+        int[] ans = new int[numCourses];
         
-        List<Set<Integer>> adjacency = new ArrayList<Set<Integer>>();
-        for(int i=0;i<numCourses;i++){
-            Set<Integer> adja = new HashSet<Integer>();
-            adjacency.add(adja);
-        } //initialization
-        
-        for(int i=0;i<prerequisites.length;i++){
-            adjacency.get(prerequisites[i][0]).add(prerequisites[i][1]);
-        }
-        
+        Map<Integer,Set<Integer>> adjacency = new HashMap<Integer,Set<Integer>>();
         int[] preNum = new int[numCourses];
-        for(int i=0;i<adjacency.size();i++){
-            Iterator<Integer> iterator = adjacency.get(i).iterator();
-            while(iterator.hasNext()){
-                preNum[iterator.next()]++;
-            }
+        for(int i=0;i<prerequisites.length;i++){
+            int cul = prerequisites[i][0];
+            int pre = prerequisites[i][1];
+            if(!adjacency.containsKey(pre))adjacency.put(pre,new HashSet<Integer>());
+            boolean tem = adjacency.get(pre).add(cul);
+            if(tem)preNum[cul]++;
         }
         
-        for(int i=0;i<numCourses;i++){
-            //try to remove all the nodes
-            //but can return in the middle
+        for(int i=0;i<numCourses;i++){//try to remove all the nodes,but can return in the middle
             int j=0;
             for(;j<numCourses;j++){
                 if(preNum[j]==0){break;}
             }
-            
-            if(j==numCourses){return ans;}
-            
+            if(j==numCourses){return new int[0];}
             preNum[j]=-1;
-            ansList.add(j);
-            
-            Iterator<Integer> temp = adjacency.get(j).iterator();
-            while(temp.hasNext()){
-                preNum[temp.next()]--;
-            }
-        }        
-        int[] newAns = new int[ansList.size()];
-        for(int i=0;i<ansList.size();i++){
-            newAns[i]=ansList.get(i);
+            ans[i]=j;
+
+            for(int tem:adjacency.getOrDefault(j,new HashSet<Integer>()))preNum[tem]--;
         }
-        return newAns;       
+        return ans;
     }
 }

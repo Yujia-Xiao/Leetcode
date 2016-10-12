@@ -61,3 +61,38 @@ public class Solution {
         return false;
     }
 }
+
+
+public class Solution {
+    public boolean exist(char[][] board, String word) {
+        if(word==null || word.length()==0)return false;
+        for(int i=0;i<board.length;i++){
+            for(int j=0;j<board[0].length;j++){
+                if(board[i][j]==word.charAt(0)){
+                    board[i][j]=0;
+                    if(backtrack(board,i,j,word,1))return true;
+                    board[i][j]=word.charAt(0);
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean backtrack(char[][] board, int i,int j,String word,int index){
+        int n = word.length();
+        if(index>n-1)return true;
+        char ch = word.charAt(index);
+        
+        int[] idx = {1,0,-1,0};
+        int[] idy = {0,1,0,-1};
+        for(int m=0;m<4;m++){
+            int a = i+idx[m];
+            int b = j+idy[m];
+            if((a<0) || (a>=board.length) || (b<0) || (b>=board[0].length) || (board[a][b]!=ch))continue;
+            board[a][b]=0;
+            if(backtrack(board,a,b,word,index+1))return true;
+            board[a][b]=ch;
+        }
+        return false;
+    }
+}
