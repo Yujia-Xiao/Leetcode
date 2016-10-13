@@ -34,8 +34,7 @@ public class Solution {
         TreeNode small = (p.val>=q.val)?q:p;
         TreeNode big = (p.val>=q.val)?p:q;
         if(root.val>small.val && root.val<big.val)return root;
-        else if(root.val>small.val && root.val>big.val)return lowestCommonAncestor(root.left,p,q);
-        else if(root.val<small.val && root.val<big.val)return lowestCommonAncestor(root.right,p,q);
-        return null;
-    }
+        else if(root.val>big.val)return lowestCommonAncestor(root.left,p,q);
+        else if(root.val<small.val)return lowestCommonAncestor(root.right,p,q);
+        return null;    }
 }
