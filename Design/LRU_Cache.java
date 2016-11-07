@@ -26,7 +26,6 @@ public class LRUCache {
     private void addNode(DLinkedNode node){
         node.pre = head;
         node.post = head.post;
-        
         head.post.pre = node;
         head.post = node;
     }

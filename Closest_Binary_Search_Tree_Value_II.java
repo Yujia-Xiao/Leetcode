@@ -50,7 +50,7 @@ public class Solution {
             else
             res.add(s2.pop());
         }
-        return res;        
+        return res;
     }
     
     // inorder traversal
