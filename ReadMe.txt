@@ -1,1 +1,2 @@
-This repository is for collecting solutions from others and saving solutions of my own. This is used to learn and think about algorithms and data structures. 
+This repository is a summary for algorithms and data structures.
+ 
