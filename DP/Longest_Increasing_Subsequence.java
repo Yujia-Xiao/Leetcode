@@ -41,3 +41,33 @@ public class Solution {
         return len;
     }
 }
+
+// One time AC 6/27/2018
+class Solution {
+    public int lengthOfLIS(int[] nums) {
+        // Typical LIS algorithm
+        // Replacce or Insert
+        if(nums == null || nums.length == 0) return 0;
+        int len = 0;
+        int s = 0;
+        int e = 0;
+        int m = 0;
+        int target = 0;
+        int[] dp = new int[nums.length];
+        
+        for(int i = 0; i < nums.length; i++){
+            target = nums[i];
+            s = 0;
+            e = len-1;
+            while(s<=e){
+                m = s + (e - s)/2;
+                if(dp[m] == target) {s = m; break;}
+                if(dp[m] > target) e = m-1;
+                else s = m + 1;
+            }
+            dp[s] = target;
+            if(s == len) len ++; 
+        }
+        return len;
+    }
+}

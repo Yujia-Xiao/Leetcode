@@ -34,3 +34,31 @@ public class Solution {
         return max*max;
     }
 }
+
+
+// 2018-06-26
+class Solution {
+    public int maximalSquare(char[][] matrix) {
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0) return 0;
+        
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int ans = 0;
+        int[][] dp = new int[n][m];
+        
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < m; j++){
+                dp[i][j] = Character.getNumericValue(matrix[i][j]);
+                if(dp[i][j] == 0) continue;
+                if(ans == 0) ans = 1;
+                if(i-1 < 0) continue;
+                if(j-1 < 0) continue;
+                int len = Math.min(Math.min(dp[i][j-1], dp[i-1][j-1]) , dp[i-1][j]);
+                if(len >= 1 ) dp[i][j] = len + 1;
+                if(len + 1 > ans) ans = len+1;
+            }
+        }
+        
+        return ans*ans;
+    }
+}
