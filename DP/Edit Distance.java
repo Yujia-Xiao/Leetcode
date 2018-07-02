@@ -37,3 +37,49 @@ Hide Similar Problems
         else return c;
     }
 }
+
+
+// 6/28/2018
+class Solution {
+    public int minDistance(String word1, String word2) {
+        //F(0-a, 0-b) = F(0-a-1, 0-b-1)  if(charAT(a) == charAt(b))
+        //F(0-a, 0-b) = 1 + Math.Min{F(0-a, 0-b-1), F(0-a-1, 0-b), F(0-a-1, 0-b-1)}
+        int len1 = (word1 == null) ? 0 : word1.length();
+        int len2 = (word2 == null) ? 0 : word2.length();
+     
+        int[][] dp = new int[len1+1][len2+1];
+        
+        for(int j = 1; j <= len2; j++)dp[0][j] = j;
+        
+        for(int i = 1; i <= len1; i++)dp[i][0] = i;
+        
+        /*
+        for(int i = 0; i<= len1;i++) 
+        {
+            System.out.println();
+            for(int j = 0; j<=len2;j++) System.out.print(dp[i][j]);
+        }
+        */
+        for(int i = 1; i <= len1; i++)
+        {
+            for(int j = 1; j <= len2; j++)
+            {
+                if(word1.charAt(i-1) == word2.charAt(j-1)) dp[i][j] = dp[i-1][j-1];
+                else
+                {
+                    dp[i][j] = 1 + Math.min(Math.min(dp[i][j-1], dp[i-1][j]), dp[i-1][j-1]);
+                }
+            }
+        }
+                                       
+        return dp[len1][len2];
+    }
+}
+
+/*
+0 0 h o r s e
+0 0 1 2 3 4 5
+r 1 1 2 2 3 4
+o 2 2 1 2 3 4
+s 3 3 2 2 2 3
+*/

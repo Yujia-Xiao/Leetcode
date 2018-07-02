@@ -37,3 +37,35 @@ public class Solution {
         return Math.max(s0[size-1],s2[size-1]);
     }
 }
+
+
+class Solution {
+    public int maxProfit(int[] prices) {
+        if(prices.length < 2)return 0;
+        int len = prices.length;
+        
+        int[] state0 = new int[len];
+        int[] state1 = new int[len];
+        int[] state2 = new int[len];
+        
+        state0[0] = 0;
+        state1[0] = -prices[0];
+        state2[0] = Integer.MIN_VALUE; // invalid situation
+        
+        for(int i = 1; i < len ; i++){
+            state0[i] = Math.max(state0[i-1], state2[i-1]);
+            state1[i] = Math.max(state0[i-1] - prices[i], state1[i-1]);
+            state2[i] = state1[i-1] + prices[i];
+        }
+        
+        return Math.max(state0[len-1],state2[len-1]);
+    }
+}
+
+/*
+    state0: rest(self-loop) or buy
+    state 1: rest(self-loop) or sell
+    state2: cooldown 
+
+
+*/
