@@ -62,3 +62,36 @@ public class Solution {
         dfs(cur.right,cur,false);
     }
 }
+
+// 07/04/2018
+/**
+ * Definition for binary tree with next pointer.
+ * public class TreeLinkNode {
+ *     int val;
+ *     TreeLinkNode left, right, next;
+ *     TreeLinkNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void connect(TreeLinkNode root) {//1
+        if(root == null)return;
+        dfs(root.left, root, true); // 2, 1, T
+        dfs(root.right, root, false); // 3, 1, F
+        return;
+    }
+    
+    public void dfs(TreeLinkNode node, TreeLinkNode parent, boolean left){// 2 ,1, T
+        if(node == null) return;
+        if(left) node.next = parent.right;// 2.next = 3
+        else{
+            if(parent.next != null){
+                node.next = parent.next.left;
+            }
+            else node.next = null;
+        }
+        
+        dfs(node.left, node, true);//
+        dfs(node.right, node, false);
+        return;
+    }
+}

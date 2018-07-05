@@ -40,3 +40,40 @@ public class Solution {
 	    return current;
     }
 }
+
+
+// 07/04/2018
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ 
+ return the max value to the root.
+ when compare, try to get longest 
+ 
+ */
+class Solution {
+    public int maxPathSum(TreeNode root) {
+        if(root == null) return 0;
+        int[] ans = new int[1];
+        ans[0] = Integer.MIN_VALUE;
+        dfs(root, ans);
+        return ans[0];
+    }
+    
+    public int dfs(TreeNode root, int[] ans ){
+        if(root == null) return 0;
+        
+        int l = dfs(root.left, ans);
+        int r = dfs(root.right, ans);
+        
+        int max = Math.max(l+root.val, Math.max(root.val, Math.max(l+root.val+r, r+root.val)));
+        if(max > ans[0]) ans[0] = max;
+        
+        return Math.max(l+root.val, Math.max(r+root.val, root.val));
+    }
+}

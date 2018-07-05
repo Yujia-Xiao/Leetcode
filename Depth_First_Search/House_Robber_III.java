@@ -47,3 +47,43 @@ public class Solution {
         return Math.max(l+r,subSum+root.val);
     }
 }
+
+// 07/04/2018
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ 
+ dfs(node, ...): return max gain up to note
+ 
+ root + left.left + left.right + right.left + right.right
+ 
+ left + right
+ 
+ */
+class Solution {
+    public int rob(TreeNode root) {
+        if(root == null) return 0;
+        return dfs(root);
+    }
+    
+    public int dfs(TreeNode root){
+        if(root == null) return 0;
+        
+        int l = dfs(root.left);
+        int r = dfs(root.right);
+        
+        int ll = (root.left == null ? 0 : dfs(root.left.left));
+        int lr = (root.left == null ? 0 : dfs(root.left.right));
+        
+        int rl = (root.right == null ? 0 : dfs(root.right.left));
+        int rr = (root.right == null ? 0 : dfs(root.right.right));
+        
+        return Math.max(root.val+ll+lr+rl+rr, l+r);
+        
+    }
+}

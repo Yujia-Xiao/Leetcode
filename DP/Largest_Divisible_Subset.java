@@ -110,3 +110,55 @@ public class Solution {
         return res;
     }
 }
+
+
+// 07/02/2018
+class Solution {
+    public List<Integer> largestDivisibleSubset(int[] nums) {
+        /* sort the array
+           find the largest geometric progression
+        */
+        List<Integer> ans = new LinkedList<Integer>();
+        if(nums == null || nums.length == 0) return ans;
+        int index = 0;
+        Arrays.sort(nums);
+        int len = nums.length;
+        int[] count = new int[len];
+        int[] pre = new int[len]; // keep the previous index
+        for (int i = 0; i < len; i++){
+            count[i] = 1; pre[i] = -1;
+        }
+        for(int i = 1; i < len; i++){
+            for(int j = i-1; j >= 0; j--){
+                if(nums[j] % nums[i] == 0 || nums[i] % nums[j] == 0){
+                    if(count[j] + 1 > count[i]){
+                        count[i] = count[j] + 1;
+                        pre[i] = j;
+                    }
+                    if(count[i] > count[index]){
+                        index = i; 
+                    }
+                }    
+            }   
+        }
+        /*
+        for(int i=0; i<len;i++){
+            System.out.print(count[i]);
+            //
+        
+        }
+        System.out.println();
+        for(int i=0; i<len;i++){
+            System.out.print(pre[i]);
+            //System.out.println;
+        
+        }
+        */
+        while(index != -1){
+            ans.add(0,nums[index]);
+            index = pre[index];
+        }
+        
+        return ans;
+    }
+}

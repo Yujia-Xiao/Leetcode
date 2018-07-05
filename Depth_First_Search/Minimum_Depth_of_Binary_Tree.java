@@ -38,3 +38,34 @@ public class Solution {
         return Math.min(left,right);
     }
 }
+
+// 07/04/2018
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int minDepth(TreeNode root) {
+        if(root == null)return 0;
+        int[] ans = new int[1];
+        ans[0] = Integer.MAX_VALUE;
+        dfs(root, 0, ans);
+        return ans[0];
+    }
+    
+    public void dfs(TreeNode root, int cul, int[] ans){
+        if(root == null)return;
+        cul++;
+        if(root.left == null && root.right == null){
+            if(cul < ans[0])ans[0] = cul;
+        }
+        dfs(root.left, cul, ans);
+        dfs(root.right, cul, ans);
+        return;
+    }
+}
