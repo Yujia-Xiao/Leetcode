@@ -57,3 +57,53 @@ public class Solution {
         return root;
     }
 }
+
+
+// 7/6/2018
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ 
+ This is an in-order traversal
+ 
+ root.right = left
+ root.left = null
+ 
+ return the last value
+ left.end.right = r
+ 
+ 
+ */
+class Solution {
+    public void flatten(TreeNode root) {
+        if(root == null)return;
+        dfs(root);
+        return;
+    }
+    public void dfs(TreeNode root){
+        if(root.left == null && root.right == null) return;
+        
+        if(root.left!=null)dfs(root.left);
+        if(root.right!=null)dfs(root.right);
+        
+        TreeNode left = root.left;
+        TreeNode right = root.right;
+        TreeNode cul = root;
+        
+        if(left!=null){
+            cul = left;
+            while(cul.right!=null)cul = cul.right;
+            cul.right = right;
+            root.left = null;
+            root.right = left;
+        }
+        
+        
+        return;
+    }
+}
