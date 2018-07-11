@@ -36,3 +36,43 @@ public class Solution {
         return root;
     };
 }
+
+// 7/6/2018
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ root + pre + post
+ pre + root + post
+ */
+class Solution {
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        int len = inorder.length;
+        if(len == 0) return null;
+        int index = 0;
+        int root = preorder[0];
+        
+        for(int i = 0; i < len; i++){
+            if(inorder[i] == root) {index = i; break;}
+        }
+        
+        TreeNode left = null;
+            if(index > 0){
+                left = buildTree(Arrays.copyOfRange(preorder, 1, index+1), Arrays.copyOfRange(inorder, 0, index));
+            }
+        TreeNode right = null;
+            if(index < len-1){
+                right = buildTree(Arrays.copyOfRange(preorder, index+1, len), Arrays.copyOfRange(inorder, index+1, len));
+            }   
+        TreeNode rootT = new TreeNode(root);
+        
+        rootT.left = left;
+        rootT.right = right;
+        return rootT;
+
+    }
+}
