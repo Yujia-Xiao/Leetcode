@@ -95,3 +95,70 @@ public class Solution{
         return grid[i][j][0];
     }
 }
+
+
+//07/11/2018
+class Solution {
+    public int[][][] grid; 
+    int num = 0; // This is the answer
+    public List<Integer> numIslands2(int m, int n, int[][] positions) {
+        List<Integer> ans = new LinkedList<Integer>();
+        grid = new int[m][n][2];
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                grid[i][j][0] = -1; // -1 means there is no '1'
+                grid[i][j][1] = 1; //rank
+            }
+        }
+        
+        for(int i=0;i<positions.length;i++){
+            num++;// will cancel this if there is any merge
+            int a = positions[i][0];
+            int b = positions[i][1];
+            
+            grid[a][b][0] = a*n+b;
+            
+            if(a>0 && grid[a-1][b][0] != -1)union(a-1, b, a, b);
+            if(a<m-1 && grid[a+1][b][0] != -1)union(a+1, b, a, b);
+            if(b>0 && grid[a][b-1][0] != -1)union(a, b-1, a, b);
+            if(b<n-1 && grid[a][b+1][0] != -1)union(a, b+1, a, b);
+            
+            ans.add(num);
+        }
+        
+        return ans;
+    }
+    
+    public void union(int a, int b, int i, int j){
+        
+        int repreA = find(a,b);
+        int repreB = find(i,j);
+        
+        if(repreA==repreB)return;
+        int m = grid[0].length;
+        
+        int rankA = grid[repreA/m][repreA%m][1];
+        int rankB = grid[repreB/m][repreB%m][1];
+        
+        if(rankA > rankB){
+            grid[repreA/m][repreA%m][1]++;
+            grid[repreB/m][repreB%m][0] = repreA;
+        }else{
+            grid[repreB/m][repreB%m][1]++;
+            grid[repreA/m][repreA%m][0] = repreB;
+        
+        }
+        
+        num--;
+        
+        return;
+    }
+     
+    public int find(int i, int j){
+        int m = grid[0].length;
+        int repre = grid[i][j][0];
+        if(repre!=i*m+j)grid[i][j][0] = find(repre/m, repre%m);
+        return grid[i][j][0];
+    }
+    
+}
