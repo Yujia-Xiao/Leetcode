@@ -57,3 +57,38 @@ public class Solution {
         return ans;
     }
 }
+
+
+//07/12/2018
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+         if(numCourses == 0 ) return null;
+        int[] ans = new int[numCourses];
+        int[] pre = new int[numCourses];
+        Map<Integer, List<Integer>> adj = new HashMap<Integer, List<Integer>>();
+        
+        for(int i = 0; i < prerequisites.length; i++){
+            pre[prerequisites[i][0]]++;
+            if(!adj.containsKey(prerequisites[i][1]))adj.put(prerequisites[i][1], new LinkedList<Integer>());
+            adj.get(prerequisites[i][1]).add(prerequisites[i][0]);
+        }
+        
+        for(int i = 0; i < numCourses; i++){
+            // add the i th node into the answer
+            int j = 0;
+            for(; j < numCourses; j++){
+                if(pre[j] == 0) break;
+            }
+            if(j == numCourses) return new int[0]; // There is a loop
+            pre[j]=-1;
+            ans[i]=j;
+            if(adj.containsKey(j)){
+                for(int a = 0; a < adj.get(j).size(); a++){
+                pre[adj.get(j).get(a)]--;
+                }    
+            }
+        }
+        
+        return ans;
+    }
+}
