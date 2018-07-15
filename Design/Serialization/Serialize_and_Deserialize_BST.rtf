@@ -166,4 +166,75 @@ public class Codec \{\
 \
 // Your Codec object will be instantiated and called as such:\
 // Codec codec = new Codec();\
+// codec.deserialize(codec.serialize(root));\
+\
+\
+// 07/15/2018\
+\
+/**\
+ * Definition for a binary tree node.\
+ * public class TreeNode \{\
+ *     int val;\
+ *     TreeNode left;\
+ *     TreeNode right;\
+ *     TreeNode(int x) \{ val = x; \}\
+ * \}\
+ */\
+public class Codec \{\
+\
+    // Encodes a tree to a single string.\
+    public String serialize(TreeNode root) \{\
+        StringBuilder strb = new StringBuilder();\
+        serializeDFS(root, strb);\
+        //System.out.println(strb.toString());\
+        return strb.toString();\
+    \}\
+    \
+    public void serializeDFS(TreeNode root, StringBuilder strb)\{\
+        if(root==null)\{return;\};\
+        strb.append(root.val+","); // pre-order\
+        serializeDFS(root.left, strb);\
+        serializeDFS(root.right,strb);\
+        return;\
+    \}\
+\
+    // Decodes your encoded data to tree.\
+    public TreeNode deserialize(String data) \{\
+        if(data==null || data.length()==0)return null;\
+        String[] dataList = data.split(",");\
+        int[] pre = new int[dataList.length];\
+        int[] in = new int[dataList.length];\
+        \
+        for(int i=0;i<dataList.length;i++)\{\
+            pre[i]=Integer.parseInt(dataList[i]);\
+            in[i]=Integer.parseInt(dataList[i]);\
+        \}\
+        \
+        Arrays.sort(in);\
+        \
+        return deserializeDFS(pre, in, 0, pre.length-1, 0, in.length-1);\
+        \
+    \}\
+    \
+    public TreeNode deserializeDFS(int[] pre, int[] in, int sP, int eP, int sI, int eI)\{\
+        if(eP<0 || eI<0 || sP>pre.length-1 || sI>in.length-1)return null;\
+        if(sP>eP || sI>eI)return null;\
+\
+        TreeNode node = new TreeNode(pre[sP]);\
+        int diff = 0;\
+        \
+        for(int i = sI ;i<=eI;i++)\{\
+            if(in[i]==pre[sP])\{diff=i-sI;break;\}\
+        \}\
+        /* pre: root, l, r\
+            in:  l, root, r   */\
+        node.left=deserializeDFS(pre, in, sP+1, sP+1+(diff-1), sI, sI+diff-1);\
+        node.right=deserializeDFS(pre, in, sP+diff+1, eP, sI+diff+1, eI);\
+        \
+        return node;\
+    \}\
+\}\
+\
+// Your Codec object will be instantiated and called as such:\
+// Codec codec = new Codec();\
 // codec.deserialize(codec.serialize(root));}

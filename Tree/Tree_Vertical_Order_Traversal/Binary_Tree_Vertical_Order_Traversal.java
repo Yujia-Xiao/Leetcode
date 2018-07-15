@@ -131,3 +131,66 @@ class Solution {
         return ans;
     }
 }
+
+
+//07/15/2018
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> verticalOrder(TreeNode root) {
+        //level-order traversal, when outputting, add val to the list
+        List<List<Integer>> ans = new LinkedList<List<Integer>>();
+        if(root==null)return ans;
+        
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        Queue<Integer> index = new LinkedList<Integer>();
+        Map<Integer,List<Integer>> map = new HashMap<Integer,List<Integer>>();
+        int min=0; int max=0;
+        
+        queue.offer(root);index.offer(0);
+        //level order
+        while(!queue.isEmpty()){
+            TreeNode node = queue.poll();
+            int num = index.poll();
+            if(!map.containsKey(num))map.put(num, new LinkedList<Integer>());
+            map.get(num).add(node.val);
+            if(node.left!=null){
+                queue.offer(node.left);
+                index.offer(num-1);
+                if(num-1<min)min=num-1;
+            }
+            if(node.right!=null){
+                queue.offer(node.right);
+                index.offer(num+1);
+                if(num+1>max)max=num+1;
+            }
+        }
+        
+        for(int i=min;i<=max;i++){
+            if(map.containsKey(i))ans.add(map.get(i));
+        }
+        
+        return ans;
+    }
+    /*
+                            3
+                           / \
+                          2   2
+                         / \   \
+                        1   4   5
+                       -2-1 0 1 2
+                       
+                       stackA: TreeNode
+                       stackB: list index
+    
+    */
+    
+    
+}
