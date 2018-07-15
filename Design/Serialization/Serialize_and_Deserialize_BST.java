@@ -115,4 +115,55 @@ public class Codec \{\
 \
 // Your Codec object will be instantiated and called as such:\
 // Codec codec = new Codec();\
+// codec.deserialize(codec.serialize(root));\
+\
+//7/14/2018\
+/**\
+ * Definition for a binary tree node.\
+ * public class TreeNode \{\
+ *     int val;\
+ *     TreeNode left;\
+ *     TreeNode right;\
+ *     TreeNode(int x) \{ val = x; \}\
+ * \}\
+ */\
+public class Codec \{\
+\
+    // Encodes a tree to a single string.\
+    public String serialize(TreeNode root) \{\
+        StringBuilder strb = new StringBuilder();\
+        serializeDFS(root, strb);\
+        return strb.toString();\
+    \}\
+    \
+    public void serializeDFS(TreeNode root, StringBuilder strb)\{\
+        if(root==null)\{strb.append("#,");return;\};\
+        strb.append(root.val+",");\
+        serializeDFS(root.left, strb);\
+        serializeDFS(root.right,strb);\
+        return;\
+    \}\
+\
+    // Decodes your encoded data to tree.\
+    public TreeNode deserialize(String data) \{\
+        if(data==null || data.length()==0)return null;\
+        String[] arr = data.split(",");\
+        Queue<String> q = new LinkedList<String>();\
+        for(int i=0;i<arr.length;i++)q.offer(arr[i]);\
+        return deserializeDFS(q);\
+    \}\
+    \
+    public TreeNode deserializeDFS(Queue<String> q)\{\
+        if(q.size()==0)return null;\
+        String cul = q.poll();\
+        if(cul.equals("#"))return null;\
+        TreeNode node = new TreeNode(Integer.parseInt(cul));\
+        node.left=deserializeDFS(q);\
+        node.right=deserializeDFS(q);\
+        return node;\
+    \}\
+\}\
+\
+// Your Codec object will be instantiated and called as such:\
+// Codec codec = new Codec();\
 // codec.deserialize(codec.serialize(root));}

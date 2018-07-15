@@ -59,3 +59,52 @@ public class Solution {
     }
 }
 
+
+// Devide and conqur
+/**
+ * Definition for binary tree with next pointer.
+ * public class TreeLinkNode {
+ *     int val;
+ *     TreeLinkNode left, right, next;
+ *     TreeLinkNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public void connect(TreeLinkNode root) {
+        
+        // level n-1: already connected
+        // level n: connect level n based on level n-1;
+        
+        if(root == null)return;
+        
+        /* level n-1: 
+            root -> null
+            head: root;
+        */
+        TreeLinkNode cul = root;
+        TreeLinkNode head = root;
+        TreeLinkNode pre = null;
+        
+        while(head!=null){ // if there is next level
+            cul = head; //temp
+            head = null; // reset
+            pre = null;//reset
+
+            while(cul!=null){
+                if(cul.left!=null){
+                    if(head==null)head=cul.left;
+                    if(pre!=null)pre.next=cul.left; //pre->valide node
+                    pre=cul.left;
+                }
+                if(cul.right!=null){
+                    if(head==null)head=cul.right;
+                    if(pre!=null)pre.next=cul.right;//pre->valide node
+                    pre=cul.right;
+                }
+                cul=cul.next;
+            }
+        }
+        
+        return;
+    }
+}
