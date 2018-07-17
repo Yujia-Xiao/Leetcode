@@ -103,3 +103,85 @@ class Trie{
     }
     
 }
+
+
+//7/16/2018
+
+class Solution {
+    class TrieNode{
+        char val;
+        int index = -1;//put the end of the vocab
+        Map<Character,TrieNode> children = new HashMap<Character, TrieNode>();
+        List<Integer> list = new LinkedList<Integer>(); // to put palindrome
+        public TrieNode(char ch){val=ch;}
+    }
+    
+    class Trie{
+        TrieNode root = new TrieNode(' ');
+        
+        public Trie(){};
+        
+        public void insert(String str, int index){
+            char[] arr = str.toCharArray();
+            TrieNode cul = root;
+            Map<Character, TrieNode> children = root.children;
+            for(int i = arr.length-1;i>=0;i--){
+                if(!children.containsKey(arr[i]))children.put(arr[i],new TrieNode(arr[i]));
+                if(isPalindrome(arr, 0, i))cul.list.add(index);
+                cul=children.get(arr[i]);
+                children=cul.children;
+            }
+            cul.index=index;
+            return;
+        }
+        
+        public void search(List<List<Integer>> ans, String str, int index){
+            char[] arr = str.toCharArray();
+            TrieNode cul = root;
+            Map<Character,TrieNode> children = root.children;
+            for(int i=0;i<arr.length;i++){
+                if(cul.index!=-1 && cul.index!=index && isPalindrome(arr, i, arr.length-1)){
+                    List<Integer> temAns = new LinkedList<Integer>();
+                    temAns.add(index);temAns.add(cul.index);
+                    ans.add(temAns);
+                }
+                if(!children.containsKey(arr[i]))return;
+                cul=children.get(arr[i]);
+                children=cul.children;
+            }
+            if(cul.index!=-1 && cul.index!=index){
+                List<Integer> temAns = new LinkedList<Integer>();
+                temAns.add(index);temAns.add(cul.index);
+                ans.add(temAns);
+            }
+            if(cul.list.size()!=0){
+                for(int j: cul.list){
+                    if(j !=index){
+                        List<Integer> temAns = new LinkedList<Integer>();
+                        temAns.add(index);temAns.add(j);
+                        ans.add(temAns);
+                    }
+                }
+            }
+        }
+        
+        public boolean isPalindrome(char[] arr, int s, int e){
+            if(s>e)return false;
+            while(s<=e){
+                if(arr[s]!=arr[e])return false;
+                s++;e--;
+            }
+            return true;
+        }
+    }
+    
+    
+    public List<List<Integer>> palindromePairs(String[] words) {
+        List<List<Integer>> ans = new LinkedList<List<Integer>>();
+        if(words==null || words.length==0)return ans;
+        Trie tree = new Trie();
+        for(int i=0; i<words.length;i++)tree.insert(words[i],i);
+        for(int i=0;i<words.length;i++)tree.search(ans,words[i],i);
+        return ans;
+    }
+}
