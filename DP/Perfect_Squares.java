@@ -28,3 +28,21 @@ public class Solution {
         return dp[n];       
     }
 }
+
+//07/18/2018
+class Solution {
+    public int numSquares(int n) {
+        if(n==0)return 1;
+        int[] dp = new int[n+1];
+        for(int i=0;i<=n;i++)dp[i]=i;
+        
+        for(int i=1; i*i<=n; i++) dp[i*i]=1;
+        for(int i=1; i<=n;i++){
+            for(int j=1;i+j*j <=n ; j++){
+                dp[i+j*j]= Math.min(dp[i+j*j],dp[i]+1);
+            }
+        }
+        
+        return dp[n];
+    }
+}
