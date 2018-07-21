@@ -43,3 +43,41 @@ private int getValue(int[] nums, int i) { // Deal with num[-1] and num[num.lengt
     }
     return nums[i];
 }
+
+//7/20/2018
+class Solution {
+    public int maxCoins(int[] nums) {
+        //
+        if(nums==null || nums.length==0)return 0;
+        int size = nums.length;
+        int[][] dp = new int[size][size];
+        
+        for(int len=1;len<=size;len++){
+            
+            for(int i=0;i<size-len+1;i++){
+                int j = i + len - 1;
+                int max = 0;
+                int cul = 0;
+                int l = (i==0)? 1 : nums[i-1];
+                int r = (j==size-1) ? 1 :nums[j+1];
+                
+                for(int k = i; k<=j;k++){
+                    cul+=l*r*nums[k];
+                    
+                    if(len!=1){
+                        if(k==i)cul+=dp[i+1][j];
+                        else if(k==j)cul+=dp[i][j-1]; 
+                        else cul+= dp[i][k-1]+dp[k+1][j];
+                        }
+                    
+                    if(cul>max)max=cul;
+                    cul=0;
+                }
+                
+                dp[i][j]=max;
+                max=0;
+            }
+        }
+        return dp[0][size-1];
+    }
+}
