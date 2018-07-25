@@ -38,3 +38,37 @@ public class Solution {
         return ans;
     }
 }
+
+//7/23/2018
+
+class Solution {
+    public List<List<Integer>> threeSum(int[] nums) {
+        List<List<Integer>> ans = new LinkedList<List<Integer>>();
+        if(nums==null || nums.length < 3)return ans;
+        //sort O(nlogn)
+        Arrays.sort(nums);
+        for(int i=0;i<nums.length-2;i++){
+            if(nums[i]>0)break; // impossible to add up to 0
+            if(i>0 && nums[i]==nums[i-1])continue; // same resulte
+            int s = i+1; 
+            int e = nums.length-1;
+            while(s<e){
+                if(nums[s]+nums[e]==-nums[i]){
+                    ans.add(Arrays.asList(nums[i],nums[s],nums[e]));
+                    while(s<e && nums[s+1]==nums[s])s++;
+                    while(s<e && nums[e-1]==nums[e])e--;
+                    s++;e--;
+                }
+                else if(nums[s]+nums[e]>-nums[i]){
+                    //while(s<e && nums[e-1]==nums[e])e--;// duplicate can be used in a answer. Only remove duplicate when it's confirmed to be inside the answer
+                    e--;
+                }
+                else{ 
+                    //while(s<e && nums[s+1]==nums[s])s++;
+                    s++; 
+                }
+            }
+        }
+        return ans;
+    }
+}
