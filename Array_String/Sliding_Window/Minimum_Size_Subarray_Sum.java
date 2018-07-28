@@ -65,3 +65,31 @@ public class Solution {
         return (len==Integer.MAX_VALUE)?0:len;
     }
 }
+
+//
+class Solution {
+    public int minSubArrayLen(int s, int[] nums) {
+        // nums: all integer is positive
+        // subarray: sum>=s
+        // accumulative sum int[] sumArr, ---> sliding window instead. 
+        // window: always find max left side.   [left(move to max index position where sum>=k)--->.    right] ++  
+        int left=0;//inclusive
+        int sum=0;
+        int ans=Integer.MAX_VALUE;
+        for(int i=0;i<nums.length;i++){
+            //add sum
+            sum+=nums[i];
+            //adjest left, and update ans
+            if(sum>=s){//find the position where sum first become sum<=k
+                while(sum>s){sum-=nums[left];left++;}
+                if(sum==s)ans=Math.min(ans,i-left+1);
+                else{
+                    left--;
+                    sum+=nums[left];
+                    ans=Math.min(ans,i-left+1);
+                }
+            }
+        }
+        return ans==Integer.MAX_VALUE ? 0:ans;
+    }
+}

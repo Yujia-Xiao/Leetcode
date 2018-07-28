@@ -48,3 +48,45 @@ public class Solution {
         return res;
     }
 }
+
+
+//7/25/2018
+class Solution {
+    public String minWindow(String s, String t) {
+        //Have string s. find the minimal length substring which contains all chars in string t.
+        /*sliding window: 
+            i:0 -> s.length()-1    , i++, O(n)
+            left: updated to the max as i move.   int[]:we know the position
+            update ansStr each time as i move when len of substring[left,i] is less then ans 
+        //dynamically know if substring of s contains all char of t
+        
+        */
+        int[] map = new int[123]; //A:65, 90, a:97, 122
+        boolean[] mapKey = new boolean[123]; // to see if the 
+        for(char ch: t.toCharArray()){map[ch]++;mapKey[ch]=true;}
+        
+        int count = t.length(); 
+        int left=0;
+        int head = 0;
+        int min = Integer.MAX_VALUE;
+        for(int i=0;i<s.length();i++){
+            char tem = s.charAt(i);
+            if(mapKey[tem]){//adjest count due to i update
+                map[tem]--;
+                if(map[tem]>=0)count--;
+            }
+            while(count==0 && left<i){ // substring[left,i] has all the char needed
+                char l = s.charAt(left);
+                if(mapKey[l] && map[l]==0)break;//do not update left
+                if(mapKey[l] && map[l]<0){map[l]++;}
+                left++; //update left
+            }
+            if(count==0 && min>i-left+1){
+                    min=i-left+1;
+                    head=left;
+            }
+        }
+        System.out.println(head);
+        return (min==Integer.MAX_VALUE) ? "" : s.substring(head,head+min);
+    }
+}

@@ -42,3 +42,42 @@ public class Solution {
         }
     }
 }
+
+//07/25/2018
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode deleteDuplicates(ListNode head) {
+        // singly-linked list
+        // delete O(n), pre cul post/   pre(head), cul(head.next),post
+        if(head==null || head.next==null)return head;
+        ListNode pre = head;
+        ListNode cul = head.next;
+        ListNode post = head.next.next;
+        // pre(), cul(last node), post(null)
+        while(cul!=null){
+            //step1: cul is dup?
+            if(pre.val==cul.val){
+                //step2: if yes, remove: pre->cul->post. : pre->post
+                pre.next=post;
+                cul=post;
+                if(post!=null)post=post.next;
+            }
+            else{
+                pre=cul;
+                cul=post;
+                if(post!=null)post=post.next;
+            }            
+            //step3: move to next
+            
+        }
+        return head;
+    }
+}
