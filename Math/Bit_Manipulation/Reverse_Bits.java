@@ -27,3 +27,24 @@ public class Solution {
         return Integer.parseUnsignedInt(str, 2);
     }
 }
+
+
+//
+
+public class Solution {
+    // you need treat n as an unsigned value
+    public int reverseBits(int n) {
+        //int: defult is signed. first bit is 0/1. need to treat n as unsigned
+        int ans = 0;
+        //get evey bit, and set the reversed position bit of ans
+        for(int i=0;i<32;i++){
+            int mask = 1<<i;
+            int bit = n & mask; // if ith bit of n is 1, will get one
+            if(bit!=0){ // 0000000010 = 2, not 1.
+                ans = ans | (1<<(31-i)); // set the reversed bit of ans
+                //System.out.println(ans);
+            }    
+        }
+        return ans;
+    }
+}
