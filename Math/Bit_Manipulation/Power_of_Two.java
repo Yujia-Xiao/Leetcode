@@ -26,3 +26,22 @@ public class Solution {
         else return false;
     }
 }
+
+
+//class Solution {
+    public boolean isPowerOfTwo(int n) {
+        if(n<1)return false;
+        int count = 0;
+        for(int i=0;i<31;i++){
+            int mask = 1<<i;
+            int bit = n & mask;
+            //System.out.println(i);
+            //System.out.println(bit);
+            if(bit!=0){
+                if(count!=0)return false;
+                count=1;
+            }
+        }
+        return true;
+    }
+}

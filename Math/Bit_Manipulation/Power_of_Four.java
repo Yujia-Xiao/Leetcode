@@ -33,3 +33,26 @@ public class Solution {
         return false;
     }
 }
+
+//7/26/2018
+class Solution {
+    public boolean isPowerOfFour(int num) {
+        if(num<1)return false;
+        int count = 0;
+        for(int i=0;i<31;i++){
+            int mask = 1<<i;
+            int bit = num & mask;
+            //System.out.println(i);
+            //System.out.println(bit);
+            //System.out.println();
+            if(bit!=0){
+                if(i % 2 ==0){
+                    if(count!=0)return false;
+                    count=1;
+                }
+                else return false;
+            }
+        }
+        return true;
+    }
+}
