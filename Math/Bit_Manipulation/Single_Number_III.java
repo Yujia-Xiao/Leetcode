@@ -31,4 +31,40 @@ public class Solution {
         a[1]=t2;
         return a;    
     }
+}//
+
+
+
+
+//class Solution {
+    public int[] singleNumber(int[] nums) {
+        int[] ans = new int[2];
+        if(nums.length<2)return ans;
+        int mix = 0;
+        for(int i=0;i<nums.length;i++){
+            mix ^= nums[i];
+        }
+        int tem = mix;//110
+        int bit = 0;
+        while( (tem & 1) == 0){// 110 & 001 =0
+            bit++;
+            tem >>= 1;
+        }
+        int mask = 1 << bit;
+        int one = 0;
+        int two = 0;
+        //System.out.println(mix);
+        //System.out.println(mask);
+        
+        for(int i=0; i<nums.length;i++ ){
+            if((mask & nums[i])!=0){//.  '!='0 is very important
+                one ^= nums[i];
+            }else{
+                two ^= nums[i];
+            }
+        }
+        ans[0]=one;
+        ans[1]=two;
+        return ans;
+    }
 }

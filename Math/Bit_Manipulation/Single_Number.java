@@ -17,3 +17,20 @@ public class Solution {
         return result;
     }
 }
+
+
+
+//
+class Solution {
+    public int singleNumber(int[] nums) {
+        /* only one num appear one time --> bit manipulation
+         i: 0- len-1,  ans = ans ^ num[i]   :    5. ----> 000 ^ 101 == 101, and 5 again 101 ^ 101 == 000
+         exclusive or is used for toggle the bit. bits toggle even number is 0, and only the single num will remain
+        */ 
+        int ans = 0;
+        for(int i =0; i< nums.length; i++){
+            ans= ans^nums[i];
+        }
+        return ans;
+    }
+}

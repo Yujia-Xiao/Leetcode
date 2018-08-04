@@ -40,3 +40,30 @@ public class Solution {
         else{return false;}        
     }
 }
+
+//7/27/2018
+class Solution {
+    public boolean isValid(String s) {
+        if(s==null || s.length()==0 )return true;
+        if( s.length()%2!=0) return false;
+        char[] arr = s.toCharArray();
+        Stack<Character> stack = new Stack<Character>();
+        stack.push(arr[0]);
+        for(int i=1;i<arr.length;i++){
+            if(arr[i]==')'){
+                if(stack.peek()=='(')stack.pop();
+                else return false;
+            }
+            else if(arr[i]==']'){
+                if(stack.peek()=='[')stack.pop();
+                else return false;
+            }
+            else if(arr[i]=='}'){
+                if(stack.peek()=='{')stack.pop();
+                else return false;
+            }
+            else stack.push(arr[i]);
+        }
+        return (stack.size()==0);
+    }
+}

@@ -41,3 +41,26 @@ public class Solution {
         return ans;
     }
 }
+
+// 8/1/2018
+class Solution {
+    public List<List<Integer>> subsets(int[] nums) {
+        /* {12,4,7,9,0,1} distinct number list, get all combinations.
+        - std method: backtracking
+        - special method: bit manipulation, since: a) full conbination b) no other constrains
+            nums length 5 ----> from 00000 - 11111.   0 is not pick, 1 is pick
+        */
+        List<List<Integer>> ans = new LinkedList<List<Integer>>();
+        if(nums==null || nums.length==0)return ans;
+        int end = (int)Math.pow(2,nums.length)-1; // 11111
+        for(int i=0; i<=end; i++){
+            List<Integer> tem = new LinkedList<Integer>();
+            for(int j=0;j<nums.length;j++){
+                int bit = i>>j & 1; //if the j th bit is 1 or 0
+                if(bit==1)tem.add(nums[j]);//if bit==1, we pick jth number
+            }
+            ans.add(tem);
+        }
+        return ans;
+    }
+}
