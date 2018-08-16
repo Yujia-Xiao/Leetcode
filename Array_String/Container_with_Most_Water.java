@@ -28,3 +28,26 @@ public class Solution {
         return maxArea;
     }
 }
+
+
+///
+class Solution {
+    public int maxArea(int[] height) {
+        //1. volumn is controlled by the smaller edge of the container.
+        if(height==null || height.length==0)return 0;
+        int max = 0;
+        int s = 0;
+        int e = height.length-1;
+        while(s<e){
+            max = Math.max(max,Math.min(height[s],height[e])*(e-s));
+            if(height[s]<=height[e]){
+                int temL = height[s];
+                while(height[s]<=temL && s<e)s++;
+            }else{
+                int temL = height[e];
+                while(height[e]<=temL && s<e)e--;
+            }
+        }
+        return max;
+    }
+}
