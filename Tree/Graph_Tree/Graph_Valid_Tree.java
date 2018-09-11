@@ -30,15 +30,17 @@ public class Solution {
         for(int i=0;i<edges.length;i++){
             x=find(set,edges[i][0]);
             y=find(set,edges[i][1]);
-            
+
             if(x == y){return false;}
-            
-            set[x]=find(set,y); //path compression
+
+            set[x]=find(set,y);
         }
-        return true;        
+        return true;
+
     }
     public int find(int[] set, int num){
         if(set[num]==-1){return num;}
-        return find(set,set[num]);
+        set[num] = find(set,set[num]);
+        return set[num];
     }
 }

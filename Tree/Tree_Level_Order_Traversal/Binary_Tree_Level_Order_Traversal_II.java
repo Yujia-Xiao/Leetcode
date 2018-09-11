@@ -48,3 +48,33 @@ public class Solution {
         dfs(ans,root.right,level+1);
     }
 }
+
+
+class Solution {
+    public List<List<Integer>> levelOrderBottom(TreeNode root) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+
+        Queue<TreeNode> que = new LinkedList<TreeNode>();
+        if(root != null){
+            que.offer(root);
+        }
+        TreeNode nd;
+        int size=0;
+        while(!que.isEmpty()){
+            size=que.size();
+            List<Integer> list = new ArrayList<Integer>();
+            while(size-->0){
+                nd = que.poll();
+                list.add(nd.val);
+                if(nd.left != null){
+                    que.offer(nd.left);
+                }
+                if(nd.right != null){
+                    que.offer(nd.right);
+                }
+            }
+            result.add(0, list);
+        }
+        return result;
+    }
+}
